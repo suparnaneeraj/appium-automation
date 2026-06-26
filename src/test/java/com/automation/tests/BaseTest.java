@@ -3,9 +3,13 @@ package com.automation.tests;
 import com.automation.utils.TestDataReader;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
+import io.qameta.allure.Allure;
+import org.openqa.selenium.OutputType;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import java.io.ByteArrayInputStream;
 import java.net.URI;
 
 public class BaseTest {
@@ -28,8 +32,21 @@ public class BaseTest {
 
     }
 
+    public void takeScreenshot() {
+        byte[] screenshot = driver.getScreenshotAs(OutputType.BYTES);
+        System.out.println("Screenshot size: " + screenshot.length);
+        Allure.addAttachment(
+                "Failure Screenshot",
+                new ByteArrayInputStream(screenshot)
+        );
+
+    }
+
     @AfterMethod
-    public void tearDown(){
+    public void tearDown(ITestResult result){
+        if (ITestResult.FAILURE == result.getStatus()) {
+            takeScreenshot();
+        }
         if(driver!=null){
             driver.quit();
         }

@@ -1,6 +1,7 @@
 package com.automation.pages;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -14,10 +15,12 @@ public class MyCartPage extends BasePage {
         super(driver);
     }
 
+    @Step("Get the title of the cart page")
     public String getPageTitle(){
         return waitForVisibility(pageTitle).getText();
     }
 
+    @Step("Get the item names in the cart")
     public ArrayList<String> getItemsInCart(){
         ArrayList<String> listOfItemsInCart = new ArrayList<>();
         List<WebElement> items= driver.findElements(itemsInCart);

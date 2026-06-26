@@ -1,6 +1,7 @@
 package com.automation.pages;
 
 import io.appium.java_client.android.AndroidDriver;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 public class ItemPage extends BasePage {
@@ -13,24 +14,31 @@ public class ItemPage extends BasePage {
     public ItemPage(AndroidDriver driver){
         super(driver);
     }
+
+    @Step("Click Add to cart button")
     public void clickAddToCart(){
-        waitForVisibility(addToCartButton).click();
+        waitForClickable(addToCartButton).click();
     }
 
+    @Step("Get the title of item details page")
     public String getItemPageTitle(){
         return waitForVisibility(itemPageTitle).getText();
 
     }
 
-    public Integer getItemsCountInCard(){
+    @Step("Get the count of items in the cart")
+    public Integer getItemsCountInCart(){
         return Integer.parseInt(waitForVisibility(itemsCountInCart).getText());
 
     }
 
+    @Step("Get the number of items to be added")
     public Integer getItemCounter(){
         return Integer.parseInt(driver.findElement(itemCounter).getText());
     }
+
+    @Step("Click on cart")
     public void clickCart(){
-        waitForVisibility(itemsCountInCart).click();
+        waitForClickable(itemsCountInCart).click();
     }
 }

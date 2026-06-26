@@ -1,0 +1,47 @@
+name: Appium Android  Tests
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  android-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up java code
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      - name: Set up node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install appium
+        run: |
+          npm install -g appium
+          appium driver install uiAutomator2
+          appium driver list --installed
+
+      - name: Start appium server
+        run: |
+          appium --log-level info &
+          sleep 10
+
+      - name: Run Appium tests on Android emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          script: mvn test
+
+
+
