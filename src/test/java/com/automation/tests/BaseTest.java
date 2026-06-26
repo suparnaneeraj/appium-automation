@@ -24,6 +24,10 @@ public class BaseTest {
             options.setDeviceName(testDataReader.getData("deviceName"));
             options.setPlatformName(testDataReader.getData("platformName"));
             options.setApp(testDataReader.getData("app"));
+            options.setCapability("adbExecTimeout", Long.parseLong(testDataReader.getData("adbExecTimeout")));
+            options.setCapability("uiautomator2ServerInstallTimeout",Long.parseLong(testDataReader.getData("uiautomator2ServerInstallTimeout")));
+            options.setCapability("uiautomator2ServerLaunchTimeout", Long.parseLong(testDataReader.getData("uiautomator2ServerLaunchTimeout")));
+            options.setCapability("androidInstallTimeout", Long.parseLong(testDataReader.getData("androidInstallTimeout")));
             driver = new AndroidDriver(URI.create(testDataReader.getData("serverUrl")).toURL(),options);
         }
         catch (Exception e) {
