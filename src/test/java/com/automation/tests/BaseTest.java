@@ -28,6 +28,8 @@ public class BaseTest {
             options.setCapability("uiautomator2ServerInstallTimeout",Long.parseLong(testDataReader.getData("uiautomator2ServerInstallTimeout")));
             options.setCapability("uiautomator2ServerLaunchTimeout", Long.parseLong(testDataReader.getData("uiautomator2ServerLaunchTimeout")));
             options.setCapability("androidInstallTimeout", Long.parseLong(testDataReader.getData("androidInstallTimeout")));
+            options.setCapability("noReset", true);
+            options.setCapability("autoGrantPermissions", true);
             driver = new AndroidDriver(URI.create(testDataReader.getData("serverUrl")).toURL(),options);
         }
         catch (Exception e) {
