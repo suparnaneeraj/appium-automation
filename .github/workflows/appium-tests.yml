@@ -21,7 +21,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
 
       - name: Install appium
         run: |
@@ -37,10 +37,11 @@ jobs:
       - name: Run Appium tests on Android emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 35
-          target: google_apis
+          api-level: 30
+          target: default
           arch: x86_64
-          profile: pixel_6
+          profile: Nexus 6
+          disable-animations: true
           script: mvn test
 
 
