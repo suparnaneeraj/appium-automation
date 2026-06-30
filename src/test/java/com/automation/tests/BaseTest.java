@@ -23,12 +23,13 @@ public class BaseTest {
             options.setAutomationName(testDataReader.getData("automationName"));
             options.setDeviceName(testDataReader.getData("deviceName"));
             options.setPlatformName(testDataReader.getData("platformName"));
-            options.setApp(testDataReader.getData("app"));
+            String appPath = System.getProperty("user.dir") + "/" + testDataReader.getData("app");
+            options.setApp(appPath);
             options.setCapability("adbExecTimeout", Long.parseLong(testDataReader.getData("adbExecTimeout")));
             options.setCapability("uiautomator2ServerInstallTimeout",Long.parseLong(testDataReader.getData("uiautomator2ServerInstallTimeout")));
             options.setCapability("uiautomator2ServerLaunchTimeout", Long.parseLong(testDataReader.getData("uiautomator2ServerLaunchTimeout")));
             options.setCapability("androidInstallTimeout", Long.parseLong(testDataReader.getData("androidInstallTimeout")));
-            options.setCapability("noReset", true);
+            options.setCapability("noReset", false);
             options.setCapability("autoGrantPermissions", true);
             driver = new AndroidDriver(URI.create(testDataReader.getData("serverUrl")).toURL(),options);
         }

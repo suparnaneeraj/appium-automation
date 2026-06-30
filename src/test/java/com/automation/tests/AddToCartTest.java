@@ -18,6 +18,7 @@ public class AddToCartTest extends BaseTest{
     public void shouldVerifyAddToCart (){
         String item =testDataReader.getData("item");
         HomePage homePage= new HomePage(driver);
+        Assert.assertEquals(homePage.getPageTitle(),"Products");
         homePage.clickOptionByText(item);
         ItemPage itemPage = new ItemPage(driver);
         Assert.assertEquals(itemPage.getItemPageTitle(),item);
@@ -33,14 +34,14 @@ public class AddToCartTest extends BaseTest{
     public void shouldVerifyItemsInCart(){
         String item =testDataReader.getData("item");
         HomePage homePage= new HomePage(driver);
+        Assert.assertEquals(homePage.getPageTitle(),"Products");
         homePage.clickOptionByText(item);
         ItemPage itemPage = new ItemPage(driver);
         itemPage.clickAddToCart();
         itemPage.clickCart();
         MyCartPage myCartPage = new MyCartPage(driver);
-        Assert.assertEquals(myCartPage.getPageTitle(),"My Carts");
+        Assert.assertEquals(myCartPage.getPageTitle(),"My Cart");
         ArrayList<String> listOfItems=myCartPage.getItemsInCart();
-        System.out.println(listOfItems);
         Assert.assertTrue(listOfItems.contains(item));
     }
 }
