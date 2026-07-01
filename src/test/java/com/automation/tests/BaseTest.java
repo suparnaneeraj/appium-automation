@@ -9,9 +9,11 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-
-import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class BaseTest {
 
@@ -41,12 +43,32 @@ public class BaseTest {
     }
 
     public void takeScreenshot() {
-        byte[] screenshot = driver.getScreenshotAs(OutputType.BYTES);
-        System.out.println("Screenshot size: " + screenshot.length);
-        Allure.addAttachment(
-                "Failure Screenshot",
-                new ByteArrayInputStream(screenshot)
-        );
+        try {
+            File source = driver.getScreenshotAs(OutputType.FILE);
+
+            File screenshotDir = new File("target/screenshots");
+            screenshotDir.mkdirs();
+
+            File destination = new File(
+                    screenshotDir,
+                    "failure-" + System.currentTimeMillis() + ".png");
+
+            Files.copy(
+                    source.toPath(),
+                    destination.toPath(),
+                    StandardCopyOption.REPLACE_EXISTING);
+
+            Allure.addAttachment(
+                    "Failure Screenshot",
+                    new FileInputStream(destination));
+
+            System.out.println("Screenshot saved: "
+                    + destination.getAbsolutePath());
+
+        } catch (Exception e) {
+            System.out.println("Failed to take screenshot: "
+                    + e.getMessage());
+        }
     }
 
     @AfterMethod
