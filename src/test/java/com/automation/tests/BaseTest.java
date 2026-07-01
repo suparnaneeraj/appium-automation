@@ -34,6 +34,8 @@ public class BaseTest {
             options.setCapability("androidInstallTimeout", Long.parseLong(testDataReader.getData("androidInstallTimeout")));
             options.setCapability("noReset", false);
             options.setCapability("autoGrantPermissions", true);
+            options.setCapability("ignoreHiddenApiPolicyError", true);
+            options.setCapability("disableWindowAnimation", true);
             driver = new AndroidDriver(URI.create(testDataReader.getData("serverUrl")).toURL(),options);
         }
         catch (Exception e) {

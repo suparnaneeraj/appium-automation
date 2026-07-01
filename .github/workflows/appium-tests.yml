@@ -48,7 +48,7 @@ jobs:
           api-level: 30
           target: default
           arch: x86_64
-          profile: Nexus 6
+          profile: pixel
           disable-animations: true
           force-avd-creation: false
           emulator-options: >-
@@ -59,9 +59,13 @@ jobs:
             -camera-back none
             -camera-front none
           script: |
+            adb wait-for-device
+            sleep 30
+            adb shell am force-stop com.android.settings || true
+            adb shell am force-stop com.google.android.permissioncontroller || true
             appium --log-level info &
             sleep 20
-            timeout 12m mvn -B test
+            mvn -B test
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
