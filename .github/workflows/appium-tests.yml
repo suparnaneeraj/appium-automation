@@ -40,17 +40,17 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: avd-${{ runner.os }}-api-30
+          key: avd-${{ runner.os }}-api-29
 
       - name: Run Appium tests on Android emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30
+          api-level: 29
           target: default
           arch: x86_64
           profile: pixel
           disable-animations: true
-          force-avd-creation: false
+          force-avd-creation: true
           emulator-options: >-
             -no-window
             -gpu swiftshader_indirect
