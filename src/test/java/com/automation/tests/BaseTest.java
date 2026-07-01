@@ -36,7 +36,11 @@ public class BaseTest {
             options.setCapability("autoGrantPermissions", true);
             options.setCapability("ignoreHiddenApiPolicyError", true);
             options.setCapability("disableWindowAnimation", true);
+            options.setAppPackage("com.saucelabs.mydemoapp.rn");
+            options.setAppActivity("com.saucelabs.mydemoapp.rn.MainActivity");
             driver = new AndroidDriver(URI.create(testDataReader.getData("serverUrl")).toURL(),options);
+            System.out.println("Current package: " + driver.getCurrentPackage());
+            System.out.println("Current activity: " + driver.currentActivity());
         }
         catch (Exception e) {
             throw new RuntimeException("Failed to initialize driver", e);

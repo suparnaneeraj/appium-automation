@@ -65,6 +65,7 @@ jobs:
             adb shell am force-stop com.google.android.permissioncontroller || true
             appium --log-level info &
             sleep 20
+            adb shell dumpsys window | grep -E 'mCurrentFocus|mFocusedApp' || true
             mvn -B test
       - name: Upload screenshots
         if: always()
