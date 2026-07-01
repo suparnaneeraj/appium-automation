@@ -6,8 +6,9 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.OutputType;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 
 import java.io.ByteArrayInputStream;
 import java.net.URI;
@@ -16,7 +17,7 @@ public class BaseTest {
 
     protected AndroidDriver driver;
     protected TestDataReader testDataReader = new TestDataReader();
-    @BeforeMethod
+    @BeforeClass
     public void setUp (){
         try{
             UiAutomator2Options options= new UiAutomator2Options();
@@ -46,17 +47,19 @@ public class BaseTest {
                 "Failure Screenshot",
                 new ByteArrayInputStream(screenshot)
         );
-
     }
 
     @AfterMethod
-    public void tearDown(ITestResult result){
-        if (ITestResult.FAILURE == result.getStatus()) {
+    public void captureFailure(ITestResult result) {
+        if (result.getStatus() == ITestResult.FAILURE) {
             takeScreenshot();
-        }
-        if(driver!=null){
-            driver.quit();
         }
     }
 
+    @AfterClass
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class AddToCartTest extends BaseTest{
 
-    @Test
+    @Test(priority = 1)
     @Description("Verify user can add product to cart successfully")
     @Severity(SeverityLevel.CRITICAL)
     public void shouldVerifyAddToCart (){
@@ -28,14 +28,11 @@ public class AddToCartTest extends BaseTest{
 
     }
 
-    @Test
+    @Test(priority = 2, dependsOnMethods = "shouldVerifyAddToCart")
     @Description("Verify the items in the cart")
     @Severity(SeverityLevel.CRITICAL)
     public void shouldVerifyItemsInCart(){
         String item =testDataReader.getData("item");
-        HomePage homePage= new HomePage(driver);
-        Assert.assertEquals(homePage.getPageTitle(),"Products");
-        homePage.clickOptionByText(item);
         ItemPage itemPage = new ItemPage(driver);
         itemPage.clickAddToCart();
         itemPage.clickCart();
