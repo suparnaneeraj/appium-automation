@@ -9,6 +9,7 @@ on:
 jobs:
   android-tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout code
@@ -58,15 +59,16 @@ jobs:
             -camera-back none
             -camera-front none
           script: |
-            adb devices
             appium --log-level info &
             sleep 20
-            mvn test
+            timeout 12m mvn -B test
       - name: Upload screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-            name: failure-screenshots
-            path: |
-              *.png
-              target/**/*.png
+          name: failure-screenshots
+          path: |
+            target/screenshots/**
+            target/surefire-reports/**
+            allure-results/**
+          if-no-files-found: ignore
